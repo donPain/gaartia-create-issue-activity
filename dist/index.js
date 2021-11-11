@@ -47,7 +47,7 @@ estimatedEffort, creatorEmail, creatorPassword) {
             variables: {}
         });
         const config = {
-            method: 'POST',
+            method: 'POST',    
             url: 'https://app.artia.com/graphql',
             headers: {
                 OrganizationId: organizationId.toString(),
