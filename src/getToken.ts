@@ -5,13 +5,14 @@ export function getToken(
   creatorPassword: string
 ): Promise<string | AxiosError> {
   console.log('Cretor email type: ' + typeof creatorEmail)
-  if (creatorEmail != typeof String) {
-    throw new Error('creatorEmail is not a string')
-  }
 
-  if (creatorPassword != typeof String) {
-    throw new Error('creatorPassword is not a string')
-  }
+  //   if (creatorEmail != typeof String) {
+  //     throw new Error('creatorEmail is not a string')
+  //   }
+
+  //   if (creatorPassword != typeof String) {
+  //     throw new Error('creatorPassword is not a string')
+  //   }
 
   const data = JSON.stringify({
     query: `mutation{

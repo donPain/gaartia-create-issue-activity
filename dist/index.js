@@ -103,12 +103,12 @@ exports.getToken = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(6545));
 function getToken(creatorEmail, creatorPassword) {
     console.log('Cretor email type: ' + typeof creatorEmail);
-    if (creatorEmail != typeof String) {
-        throw new Error('creatorEmail is not a string');
-    }
-    if (creatorPassword != typeof String) {
-        throw new Error('creatorPassword is not a string');
-    }
+    //   if (creatorEmail != typeof String) {
+    //     throw new Error('creatorEmail is not a string')
+    //   }
+    //   if (creatorPassword != typeof String) {
+    //     throw new Error('creatorPassword is not a string')
+    //   }
     const data = JSON.stringify({
         query: `mutation{
       authenticationByEmail(email:"${creatorEmail}", password: "${creatorPassword}") {
