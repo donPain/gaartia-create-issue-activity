@@ -4,6 +4,7 @@ export function getToken(
   creatorEmail: string,
   creatorPassword: string
 ): Promise<string | AxiosError> {
+  console.log('Cretor email type: ' + typeof creatorEmail)
   if (creatorEmail != typeof String) {
     throw new Error('creatorEmail is not a string')
   }

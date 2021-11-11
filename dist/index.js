@@ -102,6 +102,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getToken = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(6545));
 function getToken(creatorEmail, creatorPassword) {
+    console.log('Cretor email type: ' + typeof creatorEmail);
     if (creatorEmail != typeof String) {
         throw new Error('creatorEmail is not a string');
     }
