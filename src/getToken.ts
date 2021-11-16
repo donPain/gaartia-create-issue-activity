@@ -1,4 +1,5 @@
 import axios, {AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios'
+import * as core from '@actions/core'
 
 export function getToken(
   creatorEmail: string,
@@ -38,6 +39,9 @@ export function getToken(
       // console.log(response.statusText);
       // console.log(response.headers);
       // console.log(response.config);
+      if (response.data.data === null) {
+        core.setFailed(response.data.errors[0])
+      }
       const resObj = JSON.parse(JSON.stringify(response.data))
       const token: string = resObj.data.authenticationByEmail.token
       return token
