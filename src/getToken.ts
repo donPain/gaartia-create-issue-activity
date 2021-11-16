@@ -44,8 +44,8 @@ export function getToken(
         const token: string = resObj.data.authenticationByEmail.token
         return token
       } else {
-        core.setFailed('Get token failed')
-        // throw new Error("User not found")
+        // core.setFailed('Get token failed')
+        throw new Error('Get token failed')
       }
     })
     .catch(function (error: AxiosError) {
