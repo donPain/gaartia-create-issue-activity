@@ -39,12 +39,14 @@ export function getToken(
       // console.log(response.statusText);
       // console.log(response.headers);
       // console.log(response.config);
-      if (response.data.data === null) {
-        core.setFailed(response.data.errors[0])
-      }
       const resObj = JSON.parse(JSON.stringify(response.data))
-      const token: string = resObj.data.authenticationByEmail.token
-      return token
+      if (resObj.data != null) {
+        const token: string = resObj.data.authenticationByEmail.token
+        return token
+      } else {
+        core.setFailed('Get token failed')
+        // throw new Error("User not found")
+      }
     })
     .catch(function (error: AxiosError) {
       // console.log(error.config)
