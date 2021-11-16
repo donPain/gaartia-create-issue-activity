@@ -1,6 +1,6 @@
 import {getToken} from './getToken'
 import axios, {AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios'
-
+import * as core from '@actions/core'
 //Parametros la do core do action {organizationId, accountId}
 //Parametros informados no commit através de t:{activityId} | tudo que estiver dentro do comentário irá para tarefa.
 
@@ -46,6 +46,12 @@ export async function createActivity(
   axios(config)
     .then(function (response: AxiosResponse) {
       console.log(JSON.stringify(response.data))
+      const resObj = response.data
+      if (resObj.data != null) {
+        console.log('Atividade criada com sucesso! ' + resObj.data)
+      } else {
+        core.setFailed(resObj.errors[0])
+      }
     })
     .catch(function (error: AxiosError) {
       console.log(error.config)

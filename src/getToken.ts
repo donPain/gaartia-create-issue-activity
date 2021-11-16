@@ -5,16 +5,6 @@ export function getToken(
   creatorEmail: string,
   creatorPassword: string
 ): Promise<string | AxiosError> {
-  console.log('Cretor email type: ' + typeof creatorEmail)
-
-  if (typeof creatorEmail != 'string') {
-    throw new Error('creatorEmail is not a string')
-  }
-
-  if (typeof creatorPassword != 'string') {
-    throw new Error('creatorPassword is not a string')
-  }
-
   const data = JSON.stringify({
     query: `mutation{
       authenticationByEmail(email:"${creatorEmail}", password: "${creatorPassword}") {
@@ -44,8 +34,7 @@ export function getToken(
         const token: string = resObj.data.authenticationByEmail.token
         return token
       } else {
-        // core.setFailed('Get token failed')
-        throw new Error('Get token failed')
+        core.setFailed(resObj.errors[0])
       }
     })
     .catch(function (error: AxiosError) {

@@ -6,6 +6,25 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -22,6 +41,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createActivity = void 0;
 const getToken_1 = __nccwpck_require__(7143);
 const axios_1 = __importDefault(__nccwpck_require__(6545));
+const core = __importStar(__nccwpck_require__(2186));
 //Parametros la do core do action {organizationId, accountId}
 //Parametros informados no commit através de t:{activityId} | tudo que estiver dentro do comentário irá para tarefa.
 function createActivity(organizationId, accountId, folderId, title, description, 
@@ -59,6 +79,13 @@ estimatedEffort, creatorEmail, creatorPassword) {
         (0, axios_1.default)(config)
             .then(function (response) {
             console.log(JSON.stringify(response.data));
+            const resObj = response.data;
+            if (resObj.data != null) {
+                console.log('Atividade criada com sucesso! ' + resObj.data);
+            }
+            else {
+                core.setFailed(resObj.errors[0]);
+            }
         })
             .catch(function (error) {
             console.log(error.config);
@@ -95,20 +122,33 @@ exports.createActivity = createActivity;
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getToken = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(6545));
+const core = __importStar(__nccwpck_require__(2186));
 function getToken(creatorEmail, creatorPassword) {
-    console.log('Cretor email type: ' + typeof creatorEmail);
-    if (typeof creatorEmail != 'string') {
-        throw new Error('creatorEmail is not a string');
-    }
-    if (typeof creatorPassword != 'string') {
-        throw new Error('creatorPassword is not a string');
-    }
     const data = JSON.stringify({
         query: `mutation{
       authenticationByEmail(email:"${creatorEmail}", password: "${creatorPassword}") {
@@ -137,8 +177,7 @@ function getToken(creatorEmail, creatorPassword) {
             return token;
         }
         else {
-            // core.setFailed('Get token failed')
-            throw new Error('Get token failed');
+            core.setFailed(resObj.errors[0]);
         }
     })
         .catch(function (error) {
